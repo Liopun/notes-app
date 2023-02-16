@@ -16,7 +16,7 @@ func NewNotesItemPostgres(db *sqlx.DB) *NotesItemPostgres {
 	return &NotesItemPostgres{db: db}
 }
 
-func (r *NotesItemPostgres) Create(userId int, list notes.NotesItem) (int, error) {
+func (r *NotesItemPostgres) Create(userId int, item notes.NotesItem) (int, error) {
 	var itemId int
 
 	tx, err := r.db.Begin()
@@ -25,7 +25,7 @@ func (r *NotesItemPostgres) Create(userId int, list notes.NotesItem) (int, error
 	}
 
 	createItemQuery := fmt.Sprintf("INSERT INTO %s (title, description) values ($1, $2) RETURNING id", notesItemsTable)
-	row := tx.QueryRow(createItemQuery, list.Title, list.Description)
+	row := tx.QueryRow(createItemQuery, item.Title, item.Description)
 	if err := row.Scan(&itemId); err != nil {
 		tx.Rollback()
 		return -1, err

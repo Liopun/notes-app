@@ -6,3 +6,6 @@ db:
   port: "5432"
   dbname: "notes-app"
   sslmode: "disable"
+
+auth:
+  tokenTTL: 12h

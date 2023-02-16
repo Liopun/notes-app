@@ -19,7 +19,7 @@ type NotesList interface {
 }
 
 type NotesItem interface {
-	Create(userId int, list notes.NotesItem) (int, error)
+	Create(userId int, item notes.NotesItem) (int, error)
 	GetAll(userId, listId int) ([]notes.NotesItem, error)
 	GetById(userId, itemId int) (notes.NotesItem, error)
 	Delete(userId, itemId int) error
@@ -35,7 +35,7 @@ type Repository struct {
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Authorization: NewAuthPostgres(db),
-		// NotesList: ,
-		// NotesItem: ,
+		NotesList:     NewNotesListPostgres(db),
+		NotesItem:     NewNotesItemPostgres(db),
 	}
 }
