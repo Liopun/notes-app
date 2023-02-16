@@ -1,31 +1,31 @@
 CREATE TABLE users (
-    id              serial not null unique,
-    name            varchar(255) not null,
-    username        varchar(255) not null unique,
-    hashed_password varchar(255) not null
+    id              SERIAL NOT NULL UNIQUE,
+    name            VARCHAR(255) NOT NULL,
+    username        VARCHAR(255) NOT NULL UNIQUE,
+    hashed_password VARCHAR(255) NOT NULL
 )
 
 CREATE TABLE users_lists (
-    id      serial not null unique,
-    user_id int references users(id) on delete cascade  not null,
-    list_id int references notes_lists(id) on delete cascade not null
+    id      SERIAL NOT NULL UNIQUE,
+    user_id int REFERENCES users(id) ON DELETE CASCADE  NOT NULL,
+    list_id int REFERENCES notes_lists(id) ON DELETE CASCADE NOT NULL
 )
 
 CREATE TABLE notes_lists (
-    id          serial not null unique,
-    title       varchar(255)  not null,
-    description varchar(255)
+    id          SERIAL NOT NULL UNIQUE,
+    title       VARCHAR(255)  NOT NULL,
+    description TEXT
 )
 
 CREATE TABLE notes_items {
-    id          serial not null unique,
-    title       varchar(255)  not null,
-    description varchar(255) not null,
-    archived    boolean not null default false
+    id          SERIAL NOT NULL UNIQUE,
+    title       VARCHAR(255)  NOT NULL,
+    description TEXT NOT NULL,
+    archived    boolean NOT NULL default false
 }
 
 CREATE TABLE lists_items {
-    id      serial not null unique,
-    item_id int references notes_items(id) on delete cascade not null,
-    list_id int references notes_lists(id) on delete cascade not null
+    id      SERIAL NOT NULL UNIQUE,
+    item_id int REFERENCES notes_items(id) ON DELETE CASCADE NOT NULL,
+    list_id int REFERENCES notes_lists(id) ON DELETE CASCADE NOT NULL
 }

@@ -20,5 +20,15 @@ build.win:
 run: build.unix
 	docker-compose up --remove-orphans app -d
 
+dev:
+	docker-compose up --build --remove-orphans dev -d
+
+test.coverage:
+	go tool cover -func=cover.out | grep "total"
+
+test:
+	go test --short -coverprofile=cover.out -v ./...
+	make test.coverage
+
 lint:
 	golangci-lint run
